@@ -15,15 +15,14 @@ spark = SparkSession \
     .appName("texttransform") \
     .getOrCreate()
 
-
+source = "s3://yourinbucket/**/*.txt"
+destination = 's3://youroutbucket/data.parquet'
 
 #read in data to dataframe
 from pyspark.sql.functions import col
 from  pyspark.sql.functions import input_file_name
 
-spark.read.text("s3://arxivmanifest/**/*.txt", wholetext=True).explain()
-
-text_df = spark.read.text("s3://arxivmanifest/**/*.txt", wholetext=True).select(col("value").alias("content")).withColumn("filename", input_file_name())
+text_df = spark.read.text(source, wholetext=True).select(col("value").alias("content")).withColumn("filename", input_file_name())
 text_df.cache()
 
 
@@ -77,7 +76,7 @@ print("idf fit", time.time() - t)
 t = time.time()
 
 rescaledData = idfModel.transform(featurizedData)
-rescaledData.write.parquet('s3://parquets/data.parquet')
+rescaledData.write.parquet(destination)
 
 print("idf transform", time.time() - t)
 t = time.time()
