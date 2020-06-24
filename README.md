@@ -18,4 +18,16 @@ Next, create another lambda function with the resources in /src/Lambda/PdfConver
 
 For this function, you must create a layer in Lambda containing the PDFMiner module. Once again, enter the source and destination buckets in the lambdafunction.py file. Your source should be the bucket that was untarred to. Once again create an event notification for file creation in the source bucket, sent to this lambda function
 
-Finally you have to get the tar files into your own bucket. You can put in whatever pdf files you want from whatever source, so long as they are not scanned pdfs. If you want to use arXiv, you can use copyscript.py to help you 
+Finally you have to get the tar files into your own bucket.If you want to use arXiv, you can use copyscript.py to help you copy, since requester pays buckets are a bit tricky to work with.
+
+##EMR
+
+I used zeppelin to run my spark code, but you could just as easily turn this into a regular spark job. I chose a cluster of 16 m4.xlarge instances but its up to you what you use. When creating your cluster, specify the config file [as shown by the docs](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-configure.html)
+
+The rest of the conifg is up to you, but I got some small benefits from 
+
+
+`spark.hadoop.mapreduce.fileoutputcommitter.algorithm.version  2 `
+
+`spark.speculation false`
+
