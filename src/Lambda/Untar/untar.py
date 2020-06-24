@@ -8,14 +8,13 @@ s3_client = boto3.client('s3')
 
 def lambda_handler(event, context):
 
+    inputbucket = "yourinputbucket"
+    destbucket = "yourdestbucket"
 
     key = event['Records'][0]['s3']['object']['key']
-    bucket = "tarlake"
-
-    outbucket = "testpdflake"
 
     #gets tar file from s3
-    input_tar_file = s3_client.get_object(Bucket = bucket, Key = key)
+    input_tar_file = s3_client.get_object(Bucket = inputbucket, Key = key)
     input_tar_content = input_tar_file['Body'].read()
 
     #open file in memory to avoid storage constraints
@@ -24,7 +23,7 @@ def lambda_handler(event, context):
             if (tar_resource.isfile()):
                 #extract and reupload to s3
                 inner_file_bytes = tar.extractfile(tar_resource).read()
-                s3_client.upload_fileobj(BytesIO(inner_file_bytes), Bucket = outbucket, Key = (tar_resource.name))
+                s3_client.upload_fileobj(BytesIO(inner_file_bytes), Bucket = destbucket, Key = (tar_resource.name))
     return {
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
