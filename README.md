@@ -20,7 +20,7 @@ For this function, you must create a layer in Lambda containing the PDFMiner mod
 
 Finally you have to get the tar files into your own bucket.If you want to use arXiv, you can use copyscript.py to help you copy, since requester pays buckets are a bit tricky to work with.
 
-##EMR
+## EMR
 
 I used zeppelin to run my spark code, but you could just as easily turn this into a regular spark job. I chose a cluster of 16 m4.xlarge instances but its up to you what you use. When creating your cluster, specify the config file [as shown by the docs](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-configure.html)
 
