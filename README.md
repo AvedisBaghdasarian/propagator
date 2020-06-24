@@ -12,9 +12,9 @@ Data starts as tar files in the Arxiv requester-pays bucket. They are copied, ex
 
 ## Lambda Stack
 
-Lambda stack works on a rolling basis, responding to s3 put events. In essence, it automatically triggers when the tar files are placed in the s3 bucket. /src/Lambda/untar.py is the lambda function that will handle untarring, simply make a new lambda function and replace the default lambda_handler() with that one. Make sure to specify the source and destination buckets you will be using within untar.py. Next configure s3 to send an event notification to untar function when there is a file creation in that bucket. 
+Lambda stack works on a rolling basis, responding to s3 put events. In essence, it automatically triggers when the tar files are placed in the s3 bucket. [/src/Lambda/untar/untar.py](https://github.com/AvedisBaghdasarian/propagator/blob/master/src/Lambda/Untar/untar.py) is the lambda function that will handle untarring, simply make a new lambda function and replace the default lambda_handler() with that one. Make sure to specify the source and destination buckets you will be using within untar.py. Next configure s3 to send an event notification to untar function when there is a file creation in that bucket. 
 
-Next, create another lambda function with the resources in /src/Lambda/PdfConverter 
+Next, create another lambda function with the resources in [/src/Lambda/PdfConverter](https://github.com/AvedisBaghdasarian/propagator/tree/master/src/Lambda/PdfConverter)
 
 For this function, you must create a layer in Lambda containing the PDFMiner module. Once again, enter the source and destination buckets in the lambdafunction.py file. Your source should be the bucket that was untarred to. Once again create an event notification for file creation in the source bucket, sent to this lambda function
 
@@ -30,4 +30,6 @@ The rest of the conifg is up to you, but I got some small benefits from
 `spark.hadoop.mapreduce.fileoutputcommitter.algorithm.version  2 `
 
 `spark.speculation false`
+
+Then import the [zeppelin notebook](https://github.com/AvedisBaghdasarian/propagator/blob/master/src/Spark/zeppelinnotebook.json) into your zeppelin, and specify the source and ouput location. At this point, you can run the notebook to compute.
 
