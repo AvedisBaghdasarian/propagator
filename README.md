@@ -1,3 +1,9 @@
+# Table of Contents
+1. [propagator](README.md#propagator)
+2. [How It Works](README.md#how-it-works)
+3. [Repository Structure](README.md#Repository%20Structure)
+4. [How is it Installed?](README.md#how-is-it-installed)
+
 # propagator
 
 Propogator is an ETL pipeline to take raw pdf files and turn them into vectorized data, ready for machine learning applications. This is done in a completely scalable way, demonstrated on terrabytes of data.
