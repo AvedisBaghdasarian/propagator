@@ -29,6 +29,8 @@ Within `src`, Spark contains Spark code that is run to featurize the text files.
 
 ## Lambda Stack
 
+![LambdaStack](/images/lambdastack.png)
+
 Lambda stack works on a rolling basis, responding to s3 put events. In essence, it automatically triggers when the tar files are placed in the s3 bucket. [/src/Lambda/untar/untar.py](https://github.com/AvedisBaghdasarian/propagator/blob/master/src/Lambda/Untar/untar.py) is the lambda function that will handle untarring, simply make a new lambda function and replace the default lambda_handler() with that one. Make sure to specify the source and destination buckets you will be using within untar.py. Next configure s3 to send an event notification to untar function when there is a file creation in that bucket. 
 
 Next, create another lambda function with the resources in [/src/Lambda/PdfConverter](https://github.com/AvedisBaghdasarian/propagator/tree/master/src/Lambda/PdfConverter)
