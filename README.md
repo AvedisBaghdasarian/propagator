@@ -29,6 +29,8 @@ Next, create another lambda function with the resources in [/src/Lambda/PdfConve
 
 For this function, you must create a layer in Lambda containing the PDFMiner module. Once again, enter the source and destination buckets in the lambdafunction.py file. Your source should be the bucket that was untarred to. Once again create an event notification for file creation in the source bucket, sent to this lambda function
 
+The untar lambda function should have 1048MB memory allocated. The `PdfConverter` lambda function should have 256MB allocated.
+
 Finally you have to get the tar files into your own bucket.If you want to use arXiv, you can use copyscript.py to help you copy, since requester pays buckets are a bit tricky to work with. If you don't have tar files, and just have pdfs, you can put them straight into the pdf bucket. 
 
 ## EMR
